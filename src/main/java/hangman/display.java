@@ -10,7 +10,6 @@ public class display {
     private String definition;
     public static int userGuesses = 0;
     private int correctGuessCounter = 0;
-
     public int getUserGuesses(){
         return userGuesses;
     }
@@ -25,9 +24,6 @@ public class display {
         correctWord = lstWords.get(randomIndex).toLowerCase();
         definition = lstWords.get(randomIndex + 1);
         wordLength = correctWord.length();
-        System.out.println(correctWord);
-        System.out.println(definition);
-
         List<String> resultingList = new ArrayList<>();
         for (int i = 0; i < wordLength; i++){
             resultingList.add("_");
@@ -40,26 +36,32 @@ public class display {
     public List<String> getGuessedWord(){
         return guessedWord;
     }
-    public void updateGuess(String letter){
+    public String getDefinition(){
+        return definition;
+    }
+    public boolean updateGuess(String letter){
         boolean match = false;
-        for (int i = 0; i < correctWord.length(); i++){
-            if (letter.charAt(0) == correctWord.charAt(i)){
-                guessedWord.set(i, letter);
-                match = true;
-                correctGuessCounter += 1;
+
+        if(guessedWord.contains(letter)){
+            System.out.println("You have already guessed " + letter);
+        }
+
+        else {
+            for (int i = 0; i < correctWord.length(); i++) {
+                if (letter.charAt(0) == correctWord.charAt(i)) {
+                    guessedWord.set(i, letter);
+                    match = true;
+                    correctGuessCounter += 1;
+                }
+            }
+            if (!match) {
+                userGuesses += 1;
             }
         }
-        if (!match){
-            userGuesses += 1;
-        }
+
+        return match;
     }
-    public void createNewWord(String word){
-        wordLength = word.length();
-        correctWord = word;
-        //gettingGuessedWord();
-        System.out.println("correct: " + correctWord);
-        System.out.println("guessed: " + guessedWord);
-    }
+
     public void hangmanGraphicOutput(int guesses){
         switch (guesses) {
             case 0:
@@ -154,7 +156,6 @@ public class display {
         System.out.println("|      0      ");
         System.out.println("|    / | \\     ");
         System.out.println("|     / \\     ");
-        System.out.println("GAME OVER!");
         System.out.println("\nDUM DUM the word you were trying to guess was: " + correctWord);
     }
 }
