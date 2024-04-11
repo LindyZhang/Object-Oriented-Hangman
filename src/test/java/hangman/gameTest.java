@@ -1,22 +1,21 @@
 package hangman;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.FileNotFoundException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class gameTest {
-    @Test
-    public void testingGuess() throws IOException {
-        game game = new game();
-        game.guess();
-    }
 
     @Test
     public void playGame() throws IOException {
         game game = new game();
-        game.play();
+        game.setCorrectWord("s");
+        String input = "s\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        game.play(game);
+        assertTrue(game.getHasWon());
     }
 }
