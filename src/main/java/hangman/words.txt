@@ -1,52 +1,52 @@
-Class.
-A blueprint for creating objects, defining their attributes and behaviors.
-Object.
-An instance of a class, representing a specific entity with state and behavior.
-Interface.
-A contract that defines a set of methods a class must implement without providing their implementation.
-Superclass.
-A class from which other classes inherit attributes and behaviors.
-Subclass.
-A class that inherits attributes and behaviors from a superclass.
-Method.
-A function defined within a class that operates on the objects of that class.
-Syntax.
-The set of rules that define the structure of a programming language's code.
-Encapsulation.
-The practice of hiding the internal state of an object and requiring access through methods.
-Polymorphism.
-The ability of different objects to respond to the same method in their own way.
-Inheritance.
-The mechanism by which a class can acquire properties and methods of another class.
-Abstraction.
-The process of hiding complex implementation details and exposing only essential features.
-Coupling.
-The degree of interdependence between software modules or classes.
-Cohesion.
-The measure of how closely related and focused the responsibilities of a single module or class are.
-Association.
-A relationship between two classes where one class uses or interacts with another.
-Aggregation.
-A special form of association that represents a "has-a" relationship with a shared lifetime.
-Composition.
+Class
+A blueprint for creating objects, defining their attributes and behaviors
+Object
+An instance of a class, representing a specific entity with state and behavior
+Interface
+A contract that defines a set of methods a class must implement without providing their implementation
+Superclass
+A class from which other classes inherit attributes and behaviors
+Subclass
+A class that inherits attributes and behaviors from a superclass
+Method
+A function defined within a class that operates on the objects of that class
+Syntax
+The set of rules that define the structure of a programming language's code
+Encapsulation
+The practice of hiding the internal state of an object and requiring access through methods
+Polymorphism
+The ability of different objects to respond to the same method in their own way
+Inheritance
+The mechanism by which a class can acquire properties and methods of another class
+Abstraction
+The process of hiding complex implementation details and exposing only essential features
+Coupling
+The degree of interdependence between software modules or classes
+Cohesion
+The measure of how closely related and focused the responsibilities of a single module or class are
+Association
+A relationship between two classes where one class uses or interacts with another
+Aggregation
+A special form of association that represents a "has-a" relationship with a shared lifetime
+Composition
 A class that references one or more objects of other classes in instance variables
-Modularity.
-The division of a software system into independent, interchangeable components.
-Property.
-An attribute of an object, often accessed through getter and setter methods.
-Constructor.
-A special method used to initialize new objects of a class.
-Destructor.
-A method called when an object is destroyed to perform cleanup operations.
-Decorator.
-A design pattern that allows behavior to be added to individual objects dynamically.
-UML.
-Unified Modeling Language, a standardized way to visualize the design of a software system.
-Overriding.
-The ability of a subclass to provide a specific implementation of a method already defined in its superclass.
-Singleton.
-A design pattern that ensures a class has only one instance and provides a global point of access to it.
-Delegation.
-A technique where an object expresses certain behavior by delegating responsibility to another object.
-Concurrency.
-The ability to execute multiple parts of a program or multiple programs simultaneously.
+Modularity
+The division of a software system into independent, interchangeable components
+Property
+An attribute of an object, often accessed through getter and setter methods
+Constructor
+A special method used to initialize new objects of a class
+Destructor
+A method called when an object is destroyed to perform cleanup operations
+Decorator
+A design pattern that allows behavior to be added to individual objects dynamically
+UML
+Unified Modeling Language, a standardized way to visualize the design of a software system
+Overriding
+The ability of a subclass to provide a specific implementation of a method already defined in its superclass
+Singleton
+A design pattern that ensures a class has only one instance and provides a global point of access to it
+Delegation
+A technique where an object expresses certain behavior by delegating responsibility to another object
+Concurrency
+The ability to execute multiple parts of a program or multiple programs simultaneously

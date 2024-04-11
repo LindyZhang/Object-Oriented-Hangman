@@ -14,7 +14,7 @@ public class display {
         return userGuesses;
     }
     public boolean checkWin(){
-        return correctGuessCounter == correctWord.length();
+        return correctGuessCounter == correctWord.length()-1;
     }
     public void gettingGuessedWord() throws FileNotFoundException {
         readWords readWords = new readWords();
@@ -25,7 +25,7 @@ public class display {
         definition = lstWords.get(randomIndex + 1);
         wordLength = correctWord.length();
         List<String> resultingList = new ArrayList<>();
-        for (int i = 0; i < wordLength; i++){
+        for (int i = 0; i < wordLength - 1; i++){
             resultingList.add("_");
         }
         guessedWord = resultingList;
@@ -41,7 +41,7 @@ public class display {
     }
     public boolean updateGuess(String letter){
         boolean match = false;
-
+        letter = letter.toLowerCase();
         if(guessedWord.contains(letter)){
             System.out.println("You have already guessed " + letter);
         }
