@@ -16,6 +16,17 @@ public class display {
     public boolean checkWin(){
         return correctGuessCounter == correctWord.length()-1;
     }
+
+    public int getCorrectGuessCounter(){
+        return correctGuessCounter;
+    }
+    public void setCorrectWord(String word){
+        correctWord = word;
+        wordLength = word.length();
+        guessedWord = new ArrayList<>();
+
+        guessedWord.add("_");
+    }
     public void gettingGuessedWord() throws FileNotFoundException {
         readWords readWords = new readWords();
         List<String> lstWords = readWords.wordBank();

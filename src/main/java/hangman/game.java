@@ -4,16 +4,29 @@ import java.io.*;
 
 public class game {
     private static EventBus eventBus;
-    public game(){
+    private String correctWord;
+    public game() throws FileNotFoundException {
         eventBus = EventBus.getInstance();
         eventBus.attach(new Observer(), EventType.WELCOME);
         eventBus.attach(new Observer(), EventType.GAME_WON);
         eventBus.attach(new Observer(), EventType.GAME_LOST);
         eventBus.attach(new Observer(), EventType.CORRECT_GUESS);
         eventBus.attach(new Observer(), EventType.INCORRECT_GUESS);
+        gameDisplay.gettingGuessedWord();
+        correctWord = gameDisplay.getCorrectWord();
+    }
+    public void setCorrectWord(String word){
+        System.out.println(correctWord);
+       correctWord = word;
+       gameDisplay.setCorrectWord(word);
+        System.out.println(correctWord);
     }
     private static display gameDisplay = new display();
     private static boolean hasWon = false;
+
+    public boolean getHasWon(){
+        return hasWon;
+    }
     public static void guess() throws IOException {
         BufferedReader d = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter a letter to guess: ");
@@ -27,14 +40,17 @@ public class game {
         }
         hasWon = gameDisplay.checkWin();
         System.out.println("Your guess: " + guess);
+
     }
-    public static void play() throws IOException {
-        new game();
+    public static void play(game game) throws IOException {
         eventBus.postMessage(EventType.WELCOME);
-        gameDisplay.gettingGuessedWord();
         while (gameDisplay.getUserGuesses() < 6 && !hasWon){
             gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
             guess();
+            if(gameDisplay.getCorrectGuessCounter() == 1){
+                hasWon = true;
+                break;
+            }
         }
         gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
         gameOver();
@@ -51,7 +67,7 @@ public class game {
         eventBus.removeObservers();
     }
     public static void main(String[] args) throws IOException {
-        play();
+        play(new game());
     }
 }
 

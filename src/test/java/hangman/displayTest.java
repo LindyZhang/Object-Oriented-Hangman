@@ -10,8 +10,10 @@ public class displayTest {
     @Test
     public void testingDisplay(){
         display display = new display();
-        int guess = 3;
-        display.hangmanGraphicOutput(3);
+
+        for(int i = 0 ; i < 7; i++){
+            display.hangmanGraphicOutput(i);
+        }
     }
 
     @Test
