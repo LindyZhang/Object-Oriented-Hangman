@@ -1,0 +1,6 @@
+Polymorphism
+Cohesion
+UML
+Destructor
+Coupling
+Concurrency
