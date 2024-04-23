@@ -49,10 +49,6 @@ public class game {
         while (gameDisplay.getUserGuesses() < 6 && !hasWon){
             gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
             guess();
-            if(gameDisplay.getCorrectGuessCounter() == 1){
-                hasWon = true;
-                break;
-            }
         }
         gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
         gameOver();
