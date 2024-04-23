@@ -14,7 +14,7 @@ public class display {
         return userGuesses;
     }
     public boolean checkWin(){
-        return correctGuessCounter == correctWord.length()-1;
+        return correctGuessCounter == correctWord.length();
     }
 
     public int getCorrectGuessCounter(){
@@ -36,7 +36,7 @@ public class display {
         definition = lstWords.get(randomIndex + 1);
         wordLength = correctWord.length();
         List<String> resultingList = new ArrayList<>();
-        for (int i = 0; i < wordLength - 1; i++){
+        for (int i = 0; i < wordLength; i++){
             resultingList.add("_");
         }
         guessedWord = resultingList;

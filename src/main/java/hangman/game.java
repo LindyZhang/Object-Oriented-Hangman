@@ -1,7 +1,10 @@
 package hangman;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication;
+
 import java.util.*;
 import java.io.*;
-
+@SpringBootApplication
 public class game {
     private static EventBus eventBus;
     private String correctWord;
@@ -47,10 +50,6 @@ public class game {
         while (gameDisplay.getUserGuesses() < 6 && !hasWon){
             gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
             guess();
-            if(gameDisplay.getCorrectGuessCounter() == 1){
-                hasWon = true;
-                break;
-            }
         }
         gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
         gameOver();
@@ -67,7 +66,8 @@ public class game {
         eventBus.removeObservers();
     }
     public static void main(String[] args) throws IOException {
-        play(new game());
+        SpringApplication.run(game.class, args);
+//        play(new game());
     }
 }
 

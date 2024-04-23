@@ -15,7 +15,7 @@ class gameTest {
         String input = "s\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        game.play(game);
+        hangman.game.play(game);
         assertTrue(game.getHasWon());
     }
 }
