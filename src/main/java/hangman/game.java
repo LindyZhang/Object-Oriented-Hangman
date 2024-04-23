@@ -1,7 +1,9 @@
 package hangman;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.util.*;
 import java.io.*;
-
+@SpringBootApplication
 public class game {
     private static EventBus eventBus;
     private String correctWord;
