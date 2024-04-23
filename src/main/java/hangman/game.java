@@ -1,5 +1,6 @@
 package hangman;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication;
 
 import java.util.*;
 import java.io.*;
@@ -65,7 +66,8 @@ public class game {
         eventBus.removeObservers();
     }
     public static void main(String[] args) throws IOException {
-        play(new game());
+        SpringApplication.run(game.class, args);
+//        play(new game());
     }
 }
 
