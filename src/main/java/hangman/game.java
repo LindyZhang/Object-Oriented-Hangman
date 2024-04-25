@@ -8,6 +8,9 @@ import java.io.*;
 public class game {
     private static EventBus eventBus;
     private String correctWord;
+
+    public static display gameDisplay;
+    private static boolean hasWon = false;
     public game() throws FileNotFoundException {
         eventBus = EventBus.getInstance();
         eventBus.attach(new Observer(), EventType.WELCOME);
@@ -15,8 +18,10 @@ public class game {
         eventBus.attach(new Observer(), EventType.GAME_LOST);
         eventBus.attach(new Observer(), EventType.CORRECT_GUESS);
         eventBus.attach(new Observer(), EventType.INCORRECT_GUESS);
+        gameDisplay = new display();
         gameDisplay.gettingGuessedWord();
         correctWord = gameDisplay.getCorrectWord();
+        System.out.println(correctWord);
     }
     public void setCorrectWord(String word){
         System.out.println(correctWord);
@@ -24,8 +29,6 @@ public class game {
        gameDisplay.setCorrectWord(word);
         System.out.println(correctWord);
     }
-    private static display gameDisplay = new display();
-    private static boolean hasWon = false;
 
     public boolean getHasWon(){
         return hasWon;
@@ -53,6 +56,10 @@ public class game {
         }
         gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
         gameOver();
+    }
+
+    public boolean handleTurn(char guess) throws IOException {
+        return gameDisplay.updateGuess(String.valueOf(guess));
     }
     public static void gameOver(){
         if (hasWon){

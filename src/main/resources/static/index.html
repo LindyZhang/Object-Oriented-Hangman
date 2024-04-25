@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Oriented Hangman</title>
+    <script>
+        function startGame() {
+            fetch('/hangman/start', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('gameOutput').innerText = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function makeGuess() {
+            const guess = document.getElementById('guessInput').value;
+            fetch('/hangman/guess?letter=' + guess, { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('gameOutput').innerText = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+<h1>Object Oriented Hangman</h1>
+<div id="gameOutput">Click "Start Game" to begin.</div>
+<br>
+<button onclick="startGame()">Start Game</button>
+<br><br>
+<label for="guessInput">Enter a letter to guess:</label>
+<input type="text" id="guessInput">
+<button onclick="makeGuess()">Guess</button>
+</body>
+</html>
