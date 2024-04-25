@@ -11,6 +11,7 @@ public class game {
 
     public static display gameDisplay;
     private static boolean hasWon = false;
+
     public game() throws FileNotFoundException {
         eventBus = EventBus.getInstance();
         eventBus.attach(new Observer(), EventType.WELCOME);
@@ -23,34 +24,37 @@ public class game {
         correctWord = gameDisplay.getCorrectWord();
         System.out.println(correctWord);
     }
-    public void setCorrectWord(String word){
+
+    public void setCorrectWord(String word) {
         System.out.println(correctWord);
-       correctWord = word;
-       gameDisplay.setCorrectWord(word);
+        correctWord = word;
+        gameDisplay.setCorrectWord(word);
         System.out.println(correctWord);
     }
 
-    public boolean getHasWon(){
+    public boolean getHasWon() {
         return hasWon;
     }
+
     public static void guess() throws IOException {
         BufferedReader d = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter a letter to guess: ");
         String guess = d.readLine();
         boolean correctGuess = gameDisplay.updateGuess(guess);
 
-        if(correctGuess){
+        if (correctGuess) {
             eventBus.postMessage(EventType.CORRECT_GUESS);
-        }else{
+        } else {
             eventBus.postMessage(EventType.INCORRECT_GUESS);
         }
         hasWon = gameDisplay.checkWin();
         System.out.println("Your guess: " + guess);
 
     }
+
     public static void play(game game) throws IOException {
         eventBus.postMessage(EventType.WELCOME);
-        while (gameDisplay.getUserGuesses() < 6 && !hasWon){
+        while (gameDisplay.getUserGuesses() < 6 && !hasWon) {
             gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
             guess();
         }
@@ -58,8 +62,9 @@ public class game {
         gameOver();
     }
 
-    public boolean handleTurn(char guess) throws IOException {
-        return gameDisplay.updateGuess(String.valueOf(guess));
+    public boolean handleTurn(char guess) {
+        boolean correctGuess = gameDisplay.updateGuess(String.valueOf(guess));
+        return correctGuess;
     }
     public static void gameOver(){
         if (hasWon){
