@@ -24,19 +24,24 @@
                     document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
 
                     if (data.gameOver) {
-
-                        if(data.gameWon){
+                        if (data.gameWon) {
                             document.getElementById('gameStatus').innerText = 'You won!';
-                        }
-                        else{
+                        } else {
                             document.getElementById('gameStatus').innerText = 'Game Over! You lost';
                         }
                         document.getElementById('guessInput').disabled = true;
                         document.getElementById('guessButton').disabled = true;
                     }
                 })
-
-
+                .catch(error => console.error('Error:', error));
+        }
+        function getHint() {
+            fetch('/hangman/hint', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    // Display the hint (which is the definition)
+                    alert("Hint: " + data.definition);
+                })
                 .catch(error => console.error('Error:', error));
         }
     </script>
@@ -49,6 +54,7 @@
 <div id="gameStatus"></div>
 <br>
 <button onclick="startGame()">Start Game</button>
+<button onclick="getHint()">Hint</button> <!-- Add hint button -->
 <br><br>
 <label for="guessInput">Enter a letter to guess:</label>
 <input type="text" id="guessInput">
