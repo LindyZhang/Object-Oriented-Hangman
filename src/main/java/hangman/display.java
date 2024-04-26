@@ -51,8 +51,10 @@ public class display {
         return definition;
     }
     public boolean updateGuess(String letter){
+        System.out.println(correctWord);
         boolean match = false;
         letter = letter.toLowerCase();
+        System.out.println(letter);
         if(guessedWord.contains(letter)){
             System.out.println("You have already guessed " + letter);
         }
@@ -69,7 +71,7 @@ public class display {
                 userGuesses += 1;
             }
         }
-
+        System.out.println(guessedWord);
         return match;
     }
 
