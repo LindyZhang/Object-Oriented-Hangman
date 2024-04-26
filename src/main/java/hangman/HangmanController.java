@@ -31,7 +31,8 @@ public class HangmanController {
         return "Guess a Letter";
     }
 
-    @PostMapping("/guess")
+
+        @PostMapping("/guess")
     public ResponseEntity<Map<String, Object>> makeGuess(@RequestParam("letter") char letter) throws IOException {
         if (gameInstance == null) {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Please start the game first."));

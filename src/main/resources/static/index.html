@@ -1,40 +1,139 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Object Oriented Hangman</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('/images/background.webp');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-block;
+            min-width: 300px;
+        }
+        #guessedWordStatus {
+            font-size: 42px;
+            color: #d35400;
+            background-color: #fff3e0;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            width: 40%;
+            margin: 0 auto 20px auto; /* Centering and adding spacing */
+            display: block;
+        }
+         #enterGuess{
+            font-size: 34px;
+            color: #d35400;
+            background-color: #fff3e0;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            width: 21%;
+            margin: 0 auto 20px auto; /* Centering and adding spacing */
+            display: block;
+        }
+        #remainingGuesses{
+            font-size: 24px;
+            color: #d35400;
+            background-color: #fff3e0;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            width: 14%;
+            margin: 0 auto 20px auto; /* Centering and adding spacing */
+            display: block;
+        }
+        button {
+            background-color: #d35400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 34px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        input[type="text"] {
+            padding: 15px;
+            width: 300px;
+            font-size: 34px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+         img[src="/images/sign.png"] { /* Targeting the specific image by its src attribute */
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+        }
+        #hangmanImage {
+            display: block;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            margin: 0;
+        }
+    </style>
     <script>
+
         function startGame() {
             fetch('/hangman/start', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('gameOutput').innerText = data;
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function makeGuess() {
-            const guess = document.getElementById('guessInput').value;
-            fetch('/hangman/guess?letter=' + guess, { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('gameOutput').innerText = data.result;
-                    document.getElementById('remainingGuesses').innerText = 'Remaining Guesses: ' + data.remainingGuesses;
-                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
-
-                    if (data.gameOver) {
-                        if (data.gameWon) {
-                            document.getElementById('gameStatus').innerText = 'You won!';
-                        } else {
-                            document.getElementById('gameStatus').innerText = 'Game Over! You lost';
-                        }
-                        document.getElementById('guessInput').disabled = true;
-                        document.getElementById('guessButton').disabled = true;
-                    }
+                    document.getElementById('gameOutput').innerText = data.message;
+                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.maskedWord;
                 })
                 .catch(error => console.error('Error:', error));
         }
+       function makeGuess() {
+    const guess = document.getElementById('guessInput').value;
+    fetch('/hangman/guess?letter=' + guess, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
+            document.getElementById('remainingGuesses').innerText = 'Remaining Guesses: ' + data.remainingGuesses;
+            document.getElementById('gameOutput').innerText = data.result;
+            const incorrectGuesses = 6 - data.remainingGuesses;
+            const imagePath = "/images/" + incorrectGuesses + ".png";
+
+            document.getElementById('hangmanImage').src = imagePath;
+            if (data.gameOver) {
+                if (data.gameWon) {
+                    document.getElementById('gameStatus').innerText = 'You won!';
+                } else {
+                    document.getElementById('gameStatus').innerText = 'Game Over! You lost';
+                }
+                document.getElementById('guessInput').disabled = true;
+                document.getElementById('guessButton').disabled = true;
+            }
+            guessInput.value = "";
+        })
+        .catch(error => console.error('Error:', error));
+}
+
         function getHint() {
             fetch('/hangman/hint', { method: 'POST' })
                 .then(response => response.json())
@@ -47,17 +146,26 @@
     </script>
 </head>
 <body>
-<h1>Object Oriented Hangman</h1>
-<div id="gameOutput">Click "Start Game" to begin.</div>
-<div id="remainingGuesses"></div>
-<div id="guessedWordStatus"></div>
-<div id="gameStatus"></div>
-<br>
-<button onclick="startGame()">Start Game</button>
-<button onclick="getHint()">Hint</button> <!-- Add hint button -->
+<img src="/images/sign.png">
+<div id="guessedWordStatus">Guess a letter to start: </div>
 <br><br>
-<label for="guessInput">Enter a letter to guess:</label>
+<br><br>
+
+<div id="gameStatus"></div>
+
+<div for="guessInput" id="enterGuess">Enter a letter to guess:</div>
 <input type="text" id="guessInput">
 <button onclick="makeGuess()">Guess</button>
+<br>
+<br><br>
+<div id="remainingGuesses">Remaining guesses: 6</div>
+<br><br>
+<button onclick="getHint()">Hint</button> <!-- Add hint button -->
+<br><br>
+<img id="hangmanImage" src="/images/0.png" alt="Hangman Image">
+<script>
+    startGame();
+</script>
+
 </body>
 </html>

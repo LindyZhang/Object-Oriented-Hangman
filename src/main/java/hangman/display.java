@@ -10,6 +10,7 @@ public class display {
     private String definition;
     public static int userGuesses = 0;
     private int correctGuessCounter = 0;
+    private Set<String> guessedLetters = new HashSet<>();
     public int getUserGuesses(){
         return userGuesses;
     }
