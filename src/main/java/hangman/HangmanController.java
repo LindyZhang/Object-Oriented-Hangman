@@ -27,7 +27,7 @@ public class HangmanController {
 
         gameInstance = new game();
 
-
+//pass into maybe through respnse.put response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
         return "Guess a Letter";
     }
 

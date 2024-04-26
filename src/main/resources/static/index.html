@@ -104,35 +104,34 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('gameOutput').innerText = data.message;
-                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.maskedWord;
+                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
                 })
                 .catch(error => console.error('Error:', error));
         }
        function makeGuess() {
-    const guess = document.getElementById('guessInput').value;
-    fetch('/hangman/guess?letter=' + guess, { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
-            document.getElementById('remainingGuesses').innerText = 'Remaining Guesses: ' + data.remainingGuesses;
-            document.getElementById('gameOutput').innerText = data.result;
-            const incorrectGuesses = 6 - data.remainingGuesses;
-            const imagePath = "/images/" + incorrectGuesses + ".png";
+            const guess = document.getElementById('guessInput').value;
+            fetch('/hangman/guess?letter=' + guess, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    updateImage(6 - data.remainingGuesses);
+                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
+                    document.getElementById('remainingGuesses').innerText = 'Remaining Guesses: ' + data.remainingGuesses;
+                    document.getElementById('gameOutput').innerText = data.result;
 
-            document.getElementById('hangmanImage').src = imagePath;
-            if (data.gameOver) {
-                if (data.gameWon) {
-                    document.getElementById('gameStatus').innerText = 'You won!';
-                } else {
-                    document.getElementById('gameStatus').innerText = 'Game Over! You lost';
-                }
-                document.getElementById('guessInput').disabled = true;
-                document.getElementById('guessButton').disabled = true;
-            }
-            document.getElementById('guessInput').value = "";
-        })
-        .catch(error => console.error('Error:', error));
-}
+                    if (data.gameOver) {
+                        if (data.gameWon) {
+                            document.getElementById('gameStatus').innerText = 'You won!';
+                        } else {
+                            document.getElementById('gameStatus').innerText = 'Game Over! You lost';
+                        }
+                        document.getElementById('guessInput').disabled = true;
+                        document.getElementById('guessButton').disabled = true;
+                    }
+                    document.getElementById('guessInput').value = "";
+
+                })
+                .catch(error => console.error('Error:', error));
+       }
 
         function getHint() {
             fetch('/hangman/hint', { method: 'POST' })
@@ -146,6 +145,13 @@
 
         function clearInput() {
             document.getElementById("guessForm").reset();
+        }
+        function updateImage(remainingGuesses){
+
+            var imagePath = "/images/" + remainingGuesses + ".png"; // Construct the path based on the guess result
+            var imageElement = document.getElementById('hangmanImage'); // Get the image element
+            imageElement.src = imagePath;
+
         }
     </script>
 </head>
