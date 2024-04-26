@@ -53,5 +53,17 @@ public class HangmanController {
 
         return ResponseEntity.ok(response);
     }
+    @PostMapping("/hint")
+    public ResponseEntity<Map<String, String>> getHint() {
+        if (gameInstance == null) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Please start the game first."));
+        }
 
+        String hint = gameInstance.getHint(); // Assuming the hint is the definition
+
+        Map<String, String> response = new HashMap<>();
+        response.put("definition", hint); // Using "definition" as the key
+
+        return ResponseEntity.ok(response);
+    }
 }

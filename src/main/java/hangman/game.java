@@ -77,6 +77,11 @@ public class game {
         System.out.println("Definition: " + gameDisplay.getDefinition());
         eventBus.removeObservers();
     }
+
+    public String getHint() {
+        return gameDisplay.getDefinition();
+    }
+
     public static void main(String[] args) throws IOException {
         SpringApplication.run(game.class, args);
 //        play(new game());
