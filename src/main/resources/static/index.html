@@ -129,7 +129,7 @@
                 document.getElementById('guessInput').disabled = true;
                 document.getElementById('guessButton').disabled = true;
             }
-            guessInput.value = "";
+            document.getElementById('guessInput').value = "";
         })
         .catch(error => console.error('Error:', error));
 }
@@ -143,6 +143,10 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        function clearInput() {
+            document.getElementById("guessForm").reset();
+        }
     </script>
 </head>
 <body>
@@ -154,8 +158,10 @@
 <div id="gameStatus"></div>
 
 <div for="guessInput" id="enterGuess">Enter a letter to guess:</div>
-<input type="text" id="guessInput">
-<button onclick="makeGuess()">Guess</button>
+<form id="guessForm">
+    <input type="text" id="guessInput" name="guessInput">
+    <button type="button" onclick="makeGuess(); clearInput();">Guess</button>
+</form>
 <br>
 <br><br>
 <div id="remainingGuesses">Remaining guesses: 6</div>
