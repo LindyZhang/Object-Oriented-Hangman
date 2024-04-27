@@ -103,7 +103,6 @@
             fetch('/hangman/start', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('gameOutput').innerText = data.message;
                     document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
                 })
                 .catch(error => console.error('Error:', error));
@@ -114,20 +113,19 @@
                 .then(response => response.json())
                 .then(data => {
                     updateImage(6 - data.remainingGuesses);
-                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
-                    document.getElementById('remainingGuesses').innerText = 'Remaining Guesses: ' + data.remainingGuesses;
-                    document.getElementById('gameOutput').innerText = data.result;
 
                     if (data.gameOver) {
                         if (data.gameWon) {
-                            document.getElementById('gameStatus').innerText = 'You won!';
+                            document.getElementById('enterGuess').innerText = 'You won!';
                         } else {
-                            document.getElementById('gameStatus').innerText = 'Game Over! You lost';
+                            document.getElementById('enterGuess').innerText = 'Game Over! You lost';
                         }
-                        document.getElementById('guessInput').disabled = true;
                         document.getElementById('guessButton').disabled = true;
+                        document.getElementById('guessInput').disabled = true;
                     }
-                    document.getElementById('guessInput').value = "";
+                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
+                    document.getElementById('remainingGuesses').innerText = 'Remaining Guesses: ' + data.remainingGuesses;
+                    document.getElementById('gameOutput').innerText = data.result;
 
                 })
                 .catch(error => console.error('Error:', error));
@@ -153,6 +151,7 @@
             imageElement.src = imagePath;
 
         }
+
     </script>
 </head>
 <body>
@@ -166,7 +165,7 @@
 <div for="guessInput" id="enterGuess">Enter a letter to guess:</div>
 <form id="guessForm">
     <input type="text" id="guessInput" name="guessInput">
-    <button type="button" onclick="makeGuess(); clearInput();">Guess</button>
+    <button id = "guessButton" type="button" onclick="makeGuess(); clearInput();">Guess</button>
 </form>
 <br>
 <br><br>

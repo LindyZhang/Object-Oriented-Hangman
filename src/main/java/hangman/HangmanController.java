@@ -23,16 +23,15 @@ public class HangmanController {
 
     private static game gameInstance;
     @PostMapping("/start")
-    public String startGame() throws FileNotFoundException {
+    public ResponseEntity<Map<String, Object>> startGame() throws FileNotFoundException {
 
         gameInstance = new game();
-
-//pass into maybe through respnse.put response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
-        return "Guess a Letter";
+        Map<String, Object> response = new HashMap<>();
+        response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
+        return ResponseEntity.ok(response);
     }
 
-
-        @PostMapping("/guess")
+    @PostMapping("/guess")
     public ResponseEntity<Map<String, Object>> makeGuess(@RequestParam("letter") char letter) throws IOException {
         if (gameInstance == null) {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Please start the game first."));
@@ -49,11 +48,12 @@ public class HangmanController {
             response.put("gameWon", true);
         }
         if(gameInstance.gameDisplay.getUserGuesses() >= 6) {
+            System.out.println("Game over");
             response.put("gameOver", true);
         }
 
         return ResponseEntity.ok(response);
-    }
+}
     @PostMapping("/hint")
     public ResponseEntity<Map<String, String>> getHint() {
         if (gameInstance == null) {
