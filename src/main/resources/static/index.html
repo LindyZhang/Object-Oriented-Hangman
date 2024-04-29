@@ -120,6 +120,7 @@
         }
 
         function startHardGame() {
+
             fetch('/hangman/startHardGame', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
@@ -134,6 +135,7 @@
                 .then(data => {
                     updateImage(6 - data.remainingGuesses);
 
+                    document.getElementById('enterGuess').innerText = data.correctGuess;
                     if (data.gameOver) {
                         if (data.gameWon) {
                             document.getElementById('enterGuess').innerText = 'You won!';
