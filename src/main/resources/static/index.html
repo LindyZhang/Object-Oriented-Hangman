@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Object Oriented Hangman</title>
+
+
+    <script>
+        window.onload = function() {
+            document.getElementById('difficultyModal').style.display = 'block';
+        };
+
+        function hideModal() {
+            document.getElementById('difficultyModal').style.display = 'none';
+        }
+    </script>
     <style>
 
         body {
@@ -82,7 +93,7 @@
             border: 2px solid #ccc;
             border-radius: 4px;
         }
-         img[src="/images/sign.png"] { /* Targeting the specific image by its src attribute */
+         img[src="/images/sign.png"] {
             display: block;
             position: absolute;
             top: 0;
@@ -101,6 +112,15 @@
 
         function startGame() {
             fetch('/hangman/start', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function startHardGame() {
+            fetch('/hangman/startHardGame', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('guessedWordStatus').innerText = 'Guessed Word: ' + data.guessedWordStatus;
@@ -135,7 +155,6 @@
             fetch('/hangman/hint', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
-                    // Display the hint (which is the definition)
                     alert("Hint: " + data.definition);
                 })
                 .catch(error => console.error('Error:', error));
@@ -146,8 +165,8 @@
         }
         function updateImage(remainingGuesses){
 
-            var imagePath = "/images/" + remainingGuesses + ".png"; // Construct the path based on the guess result
-            var imageElement = document.getElementById('hangmanImage'); // Get the image element
+            var imagePath = "/images/" + remainingGuesses + ".png";
+            var imageElement = document.getElementById('hangmanImage');
             imageElement.src = imagePath;
 
         }
@@ -156,7 +175,7 @@
 </head>
 <body>
 <img src="/images/sign.png">
-<div id="guessedWordStatus">Guess a letter to start: </div>
+<div id="guessedWordStatus">Welcome! </div>
 <br><br>
 <br><br>
 
@@ -167,16 +186,21 @@
     <input type="text" id="guessInput" name="guessInput">
     <button id = "guessButton" type="button" onclick="makeGuess(); clearInput();">Guess</button>
 </form>
+
 <br>
 <br><br>
 <div id="remainingGuesses">Remaining guesses: 6</div>
 <br><br>
-<button onclick="getHint()">Hint</button> <!-- Add hint button -->
+<button onclick="getHint()">Hint</button>
 <br><br>
 <img id="hangmanImage" src="/images/0.png" alt="Hangman Image">
-<script>
-    startGame();
-</script>
 
+<div id="difficultyModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border-radius: 8px;">
+        <h2>Select Difficulty</h2>
+        <button type="button" onclick="startGame(); hideModal();">Normal Mode</button>
+        <button type="button" onclick="startHardGame(); hideModal();">Hard Mode</button>
+    </div>
+</div>
 </body>
 </html>

@@ -6,9 +6,9 @@ import java.util.*;
 import java.util.Scanner;
 
 public class readWords {
-    public List<String> wordBank() throws FileNotFoundException {
+    public List<String> wordBank(String filename) throws FileNotFoundException {
         List<String> words = new ArrayList<>();
-        Scanner scanner = new Scanner(new File("src/main/java/hangman/words.txt"));
+        Scanner scanner = new Scanner(new File(filename));
         scanner.useDelimiter("\\n");
 
         while (scanner.hasNext()){

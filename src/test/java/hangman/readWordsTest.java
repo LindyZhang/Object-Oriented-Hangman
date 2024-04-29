@@ -11,6 +11,6 @@ public class readWordsTest {
     @Test
     public void testWordBank() throws FileNotFoundException {
         readWords readWords = new readWords();
-        readWords.wordBank();
+        readWords.wordBank( "src/main/java/hangman/words.txt");
     }
 }

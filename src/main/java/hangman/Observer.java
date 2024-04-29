@@ -1,19 +1,32 @@
 package hangman;
 
-public class Observer implements IObserver{
+public class Observer implements IObserver {
     @Override
     public void update(EventType eventType) {
-
-        if(eventType == EventType.WELCOME){
-            System.out.println("Welcome to Object Oriented Hangman!");
+        if (eventType == EventType.WELCOME) {
+            speak("Welcome to Object Oriented Hangman!");
         } else if (eventType == EventType.GAME_WON) {
-            System.out.println("YIPPEE YOU WON!");
+            speak("YOU WON!");
         } else if (eventType == EventType.GAME_LOST) {
-            System.out.println("GAME OVER!");
+            speak("GAME OVER!, you lost");
         } else if (eventType == EventType.CORRECT_GUESS) {
-            System.out.println("Correct Guess!");
+            speak("Correct Guess!");
         } else if (eventType == EventType.INCORRECT_GUESS) {
-            System.out.println("Incorrect Guess");
+            speak("Incorrect Guess");
+        }
+    }
+
+    private void speak(String text) {
+        try {
+            // MAC IMPLEMENTATION
+            String[] cmd = {"say", text};
+            Runtime.getRuntime().exec(cmd);
+
+            // WINDOWS IMPLEMENTATION
+            // Runtime.getRuntime().exec("nircmd.exe speak text \"" + text + "\"");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
+

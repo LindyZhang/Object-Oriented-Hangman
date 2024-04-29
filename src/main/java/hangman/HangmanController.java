@@ -22,10 +22,22 @@ public class HangmanController {
     }
 
     private static game gameInstance;
+
     @PostMapping("/start")
     public ResponseEntity<Map<String, Object>> startGame() throws FileNotFoundException {
 
-        gameInstance = new game();
+        GameBuilder gameBuilder = new GameBuilder().setHardMode(false);
+        gameInstance = gameBuilder.build();
+        Map<String, Object> response = new HashMap<>();
+        response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/startHardGame")
+    public ResponseEntity<Map<String, Object>> startHardGame() throws FileNotFoundException {
+
+        GameBuilder gameBuilder = new GameBuilder().setHardMode(true);
+        gameInstance = gameBuilder.build();
         Map<String, Object> response = new HashMap<>();
         response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
         return ResponseEntity.ok(response);
@@ -44,10 +56,12 @@ public class HangmanController {
         response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
 
         if(gameInstance.gameDisplay.checkWin()){
+            game.gameOver();
             response.put("gameOver", true);
             response.put("gameWon", true);
         }
         if(gameInstance.gameDisplay.getUserGuesses() >= 6) {
+            game.gameOver();
             System.out.println("Game over");
             response.put("gameOver", true);
         }
@@ -60,10 +74,10 @@ public class HangmanController {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Please start the game first."));
         }
 
-        String hint = gameInstance.getHint(); // Assuming the hint is the definition
+        String hint = gameInstance.getHint();
 
         Map<String, String> response = new HashMap<>();
-        response.put("definition", hint); // Using "definition" as the key
+        response.put("definition", hint);
 
         return ResponseEntity.ok(response);
     }

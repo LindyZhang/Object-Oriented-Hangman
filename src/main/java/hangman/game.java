@@ -8,7 +8,7 @@ import java.io.*;
 public class game {
     private static EventBus eventBus;
     private String correctWord;
-
+    public String textFile;
     public static display gameDisplay;
     private static boolean hasWon = false;
 
@@ -19,10 +19,16 @@ public class game {
         eventBus.attach(new Observer(), EventType.GAME_LOST);
         eventBus.attach(new Observer(), EventType.CORRECT_GUESS);
         eventBus.attach(new Observer(), EventType.INCORRECT_GUESS);
-        gameDisplay = new display();
-        gameDisplay.gettingGuessedWord();
+        game.gameDisplay =  new display();
+
+    }
+
+    public void setDifficulty(String filename) throws FileNotFoundException {
+
+        gameDisplay.gettingGuessedWord(filename);
         correctWord = gameDisplay.getCorrectWord();
         System.out.println(correctWord);
+
     }
 
     public void setCorrectWord(String word) {
@@ -41,19 +47,14 @@ public class game {
         System.out.println("Enter a letter to guess: ");
         String guess = d.readLine();
         boolean correctGuess = gameDisplay.updateGuess(guess);
-
-        if (correctGuess) {
-            eventBus.postMessage(EventType.CORRECT_GUESS);
-        } else {
-            eventBus.postMessage(EventType.INCORRECT_GUESS);
-        }
         hasWon = gameDisplay.checkWin();
         System.out.println("Your guess: " + guess);
 
     }
 
     public static void play(game game) throws IOException {
-        eventBus.postMessage(EventType.WELCOME);
+
+        game.setDifficulty("src/main/java/hangman/words.txt");
         while (gameDisplay.getUserGuesses() < 6 && !hasWon) {
             gameDisplay.hangmanGraphicOutput(gameDisplay.getUserGuesses());
             guess();
@@ -64,6 +65,10 @@ public class game {
 
     public boolean handleTurn(char guess) {
         boolean correctGuess = gameDisplay.updateGuess(String.valueOf(guess));
+        if(gameDisplay.checkWin()) {
+            hasWon = true;
+        }
+
         return correctGuess;
     }
     public static void gameOver(){

@@ -28,9 +28,9 @@ public class display {
 
         guessedWord.add("_");
     }
-    public void gettingGuessedWord() throws FileNotFoundException {
+    public void gettingGuessedWord(String filename) throws FileNotFoundException {
         readWords readWords = new readWords();
-        List<String> lstWords = readWords.wordBank();
+        List<String> lstWords = readWords.wordBank(filename);
         int randomIndex = new Random().nextInt(lstWords.size() / 2) * 2;
 
         correctWord = lstWords.get(randomIndex).toLowerCase();
