@@ -8,6 +8,7 @@ public class display {
     private List<String> guessedWord;
     private String correctWord;
     private String definition;
+    private Set<String> alreadyGuessedLetters = new HashSet<String>();
     public static int userGuesses = 0;
     private int correctGuessCounter = 0;
     private Set<String> guessedLetters = new HashSet<>();
@@ -51,17 +52,38 @@ public class display {
     public String getDefinition(){
         return definition;
     }
+//    public boolean updateGuess(String letter){
+//        System.out.println(correctWord);
+//        boolean match = false;
+//        letter = letter.toLowerCase();
+//        System.out.println(letter);
+//        if(guessedWord.contains(letter)){
+//            System.out.println("You have already guessed " + letter);
+//            match = true;
+//        }
+//
+//        else {
+//            for (int i = 0; i < correctWord.length(); i++) {
+//                if (letter.charAt(0) == correctWord.charAt(i)) {
+//                    guessedWord.set(i, letter);
+//                    match = true;
+//                    correctGuessCounter += 1;
+//                }
+//            }
+//            if (!match) {
+//                userGuesses += 1;
+//            }
+//        }
+//        System.out.println(guessedWord);
+//        return match;
+//    }
     public boolean updateGuess(String letter){
-        System.out.println(correctWord);
         boolean match = false;
         letter = letter.toLowerCase();
-        System.out.println(letter);
-        if(guessedWord.contains(letter)){
+        if (alreadyGuessedLetters.contains(letter)) {
             System.out.println("You have already guessed " + letter);
-            match = true;
-        }
-
-        else {
+        } else {
+            alreadyGuessedLetters.add(letter);
             for (int i = 0; i < correctWord.length(); i++) {
                 if (letter.charAt(0) == correctWord.charAt(i)) {
                     guessedWord.set(i, letter);
@@ -73,7 +95,7 @@ public class display {
                 userGuesses += 1;
             }
         }
-        System.out.println(guessedWord);
+        System.out.println("Guessed word: " + guessedWord);
         return match;
     }
 
