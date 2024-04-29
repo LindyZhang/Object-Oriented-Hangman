@@ -58,6 +58,7 @@ public class display {
         System.out.println(letter);
         if(guessedWord.contains(letter)){
             System.out.println("You have already guessed " + letter);
+            match = true;
         }
 
         else {
