@@ -52,31 +52,6 @@ public class display {
     public String getDefinition(){
         return definition;
     }
-//    public boolean updateGuess(String letter){
-//        System.out.println(correctWord);
-//        boolean match = false;
-//        letter = letter.toLowerCase();
-//        System.out.println(letter);
-//        if(guessedWord.contains(letter)){
-//            System.out.println("You have already guessed " + letter);
-//            match = true;
-//        }
-//
-//        else {
-//            for (int i = 0; i < correctWord.length(); i++) {
-//                if (letter.charAt(0) == correctWord.charAt(i)) {
-//                    guessedWord.set(i, letter);
-//                    match = true;
-//                    correctGuessCounter += 1;
-//                }
-//            }
-//            if (!match) {
-//                userGuesses += 1;
-//            }
-//        }
-//        System.out.println(guessedWord);
-//        return match;
-//    }
     public boolean updateGuess(String letter){
         boolean match = false;
         letter = letter.toLowerCase();
