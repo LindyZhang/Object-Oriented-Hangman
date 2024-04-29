@@ -51,7 +51,7 @@ public class HangmanController {
 
         boolean correctGuess = gameInstance.handleTurn(letter);
         Map<String, Object> response = new HashMap<>();
-        response.put("result", correctGuess ? "Correct guess!" : "Incorrect guess!");
+        response.put("correctGuess", correctGuess ? "Correct guess!" : "Incorrect guess!");
         response.put("remainingGuesses", 6-gameInstance.gameDisplay.getUserGuesses());
         response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
 
