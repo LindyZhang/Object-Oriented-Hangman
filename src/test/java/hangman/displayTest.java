@@ -19,7 +19,7 @@ public class displayTest {
     @Test
     public void testPrints() throws FileNotFoundException {
         display display = new display();
-        display.gettingGuessedWord();
+        display.gettingGuessedWord( "src/main/java/hangman/words.txt");
         display.hangmanGraphicOutput(4);
     }
 }

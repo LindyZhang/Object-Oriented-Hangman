@@ -1,6 +1,12 @@
 Polymorphism
+The ability of different objects to respond to the same method in their own way
 Cohesion
+The measure of how closely related and focused the responsibilities of a single module or class are
 UML
+Unified Modeling Language, a standardized way to visualize the design of a software system
 Destructor
+A method called when an object is destroyed to perform cleanup operations
 Coupling
+The degree of interdependence between software modules or classes
 Concurrency
+The ability to execute multiple parts of a program or multiple programs simultaneously

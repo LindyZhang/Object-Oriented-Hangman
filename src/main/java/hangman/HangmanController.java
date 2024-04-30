@@ -22,17 +22,28 @@ public class HangmanController {
     }
 
     private static game gameInstance;
+
     @PostMapping("/start")
-    public String startGame() throws FileNotFoundException {
+    public ResponseEntity<Map<String, Object>> startGame() throws FileNotFoundException {
 
-        gameInstance = new game();
-
-//pass into maybe through respnse.put response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
-        return "Guess a Letter";
+        GameBuilder gameBuilder = new GameBuilder().setHardMode(false);
+        gameInstance = gameBuilder.build();
+        Map<String, Object> response = new HashMap<>();
+        response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
+        return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/startHardGame")
+    public ResponseEntity<Map<String, Object>> startHardGame() throws FileNotFoundException {
 
-        @PostMapping("/guess")
+        GameBuilder gameBuilder = new GameBuilder().setHardMode(true);
+        gameInstance = gameBuilder.build();
+        Map<String, Object> response = new HashMap<>();
+        response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/guess")
     public ResponseEntity<Map<String, Object>> makeGuess(@RequestParam("letter") char letter) throws IOException {
         if (gameInstance == null) {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Please start the game first."));
@@ -40,30 +51,33 @@ public class HangmanController {
 
         boolean correctGuess = gameInstance.handleTurn(letter);
         Map<String, Object> response = new HashMap<>();
-        response.put("result", correctGuess ? "Correct guess!" : "Incorrect guess!");
+        response.put("correctGuess", correctGuess ? "Correct guess!" : "Incorrect guess!");
         response.put("remainingGuesses", 6-gameInstance.gameDisplay.getUserGuesses());
         response.put("guessedWordStatus", gameInstance.gameDisplay.getGuessedWord());
 
         if(gameInstance.gameDisplay.checkWin()){
+            game.gameOver();
             response.put("gameOver", true);
             response.put("gameWon", true);
         }
         if(gameInstance.gameDisplay.getUserGuesses() >= 6) {
+            game.gameOver();
+            System.out.println("Game over");
             response.put("gameOver", true);
         }
 
         return ResponseEntity.ok(response);
-    }
+}
     @PostMapping("/hint")
     public ResponseEntity<Map<String, String>> getHint() {
         if (gameInstance == null) {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Please start the game first."));
         }
 
-        String hint = gameInstance.getHint(); // Assuming the hint is the definition
+        String hint = gameInstance.getHint();
 
         Map<String, String> response = new HashMap<>();
-        response.put("definition", hint); // Using "definition" as the key
+        response.put("definition", hint);
 
         return ResponseEntity.ok(response);
     }
